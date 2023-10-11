@@ -6,12 +6,6 @@ var colorPicker3 = document.getElementById("colorPicker3");
 var colorPicker4 = document.getElementById("colorPicker4");
 var colorPicker5 = document.getElementById("colorPicker5");
 
-var box1 = document.getElementById("color-box-1");
-var box2 = document.getElementById("color-box-2");
-var box3 = document.getElementById("color-box-3");
-var box4 = document.getElementById("color-box-4");
-var box5 = document.getElementById("color-box-5");
-
 rgb1 = document.getElementById("rgb1");
 hex1 = document.getElementById("hex1");
 
@@ -28,26 +22,29 @@ rgb5 = document.getElementById("rgb5");
 hex5 = document.getElementById("hex5");
 
 
-setColorPickerHandler(colorPicker1, box1, rgb1, hex1);
-setColorPickerHandler(colorPicker2, box2, rgb2, hex2);
-setColorPickerHandler(colorPicker3, box3, rgb3, hex3);
-setColorPickerHandler(colorPicker4, box4, rgb4, hex4);
-setColorPickerHandler(colorPicker5, box5, rgb5, hex5);
+setColorPickerHandler(colorPicker1, rgb1, hex1, "background-color", "background-color");
+setColorPickerHandler(colorPicker2, rgb2, hex2, "text-color", "color");
+setColorPickerHandler(colorPicker3, rgb3, hex3, "sec-color", "background-color");
+setColorPickerHandler(colorPicker4, rgb4, hex4, "pri-color", "color");
+setColorPickerHandler(colorPicker5, rgb5, hex5, "spe-color", "background-color");
 
 
-function setColorPickerHandler(colorPicker, box, rgbElement, hexElement) {
+function setColorPickerHandler(colorPicker, rgbElement, hexElement, className, colorOperation) {
     colorPicker.addEventListener("input", function() {
       var color = colorPicker.value;
-      box.style.backgroundColor = color;
       rgbElement.innerHTML = hexToRGB(color);
       hexElement.innerHTML = "Hex: " + color;
-      if(box == document.getElementById("color-box-1")){
-        document.body.style.background = color;
-      }
-      if(box == document.getElementById("color-box-2")){
-        document.body.style.color = color;
+      let domElements = document.getElementsByClassName(className);
+      for (let i = 0; i < domElements.length; i++) {
+        if(colorOperation == "background-color"){
+          domElements[i].style.backgroundColor = colorPicker.value;
+        }
+        if(colorOperation == "color"){
+          domElements[i].style.color = colorPicker.value;
+        }
       }
     });
+
 }
 
 function hexToRGB(hex){
